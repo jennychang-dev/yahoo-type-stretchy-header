@@ -6,7 +6,7 @@ class MasterViewController: UITableViewController {
     var objects = [Any]()
     var cell = TableViewCell()
     var news = [NewsItem]()
-    let kTableHeaderHeight = 150.0
+    let kTableHeaderHeight: CGFloat = 198.0
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
@@ -24,24 +24,32 @@ class MasterViewController: UITableViewController {
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
+        headerView = tableView.tableHeaderView
         tableView.tableHeaderView = nil
-            
-//            UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.height)/3))
+        tableView.addSubview(headerView)
         
-        guard let header = tableView.tableHeaderView else {
-            fatalError("no header view 😱")
-        }
+        tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
+        setUpHeaderLayout()
         
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: header.frame.height))
-        imageView.image = UIImage(named: "bg-header")
-        header.addSubview(imageView)
         
         setUpDefaultNewsHeadlines()
     }
     
     func setUpHeaderLayout() {
+        var customHeader = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.frame.width, height: kTableHeaderHeight)
         
+        if tableView.contentOffset.y < -kTableHeaderHeight {
+            customHeader.origin.y = tableView.contentOffset.y
+            customHeader.size.height = -tableView.contentOffset.y
+        }
         
+        headerView.frame = customHeader
+        
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        setUpHeaderLayout()
     }
     
     func setUpDefaultNewsHeadlines() {
