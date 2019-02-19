@@ -7,13 +7,14 @@ class MasterViewController: UITableViewController {
     var cell = TableViewCell()
     var news = [NewsItem]()
     let kTableHeaderHeight: CGFloat = 198.0
-    
+
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
         navigationItem.leftBarButtonItem = editButtonItem
         self.navigationController?.isNavigationBarHidden = true
         
@@ -28,23 +29,35 @@ class MasterViewController: UITableViewController {
         tableView.tableHeaderView = nil
         tableView.addSubview(headerView)
         
+        // the distance that the content view is inset from the enclosing scroll view
         tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
+        
+        // content offset defines the point that is visible at the top left of the scroll view bounds
         tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
+        
         setUpHeaderLayout()
-        
-        
         setUpDefaultNewsHeadlines()
     }
     
     func setUpHeaderLayout() {
         var customHeader = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.frame.width, height: kTableHeaderHeight)
-        
+
         if tableView.contentOffset.y < -kTableHeaderHeight {
             customHeader.origin.y = tableView.contentOffset.y
             customHeader.size.height = -tableView.contentOffset.y
         }
+
         
         headerView.frame = customHeader
+        dateLabel.text = createDate()
+        
+    }
+    
+    func createDate() -> String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd"
+        return formatter.string(from: now)
         
     }
     
@@ -127,7 +140,6 @@ class MasterViewController: UITableViewController {
             objects.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
 
@@ -139,9 +151,6 @@ class MasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    
-
 
 }
 

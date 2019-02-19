@@ -89,6 +89,13 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-header" translatesAutoresizingMaskIntoConstraints="NO" id="sgx-Dc-dZf">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="198"/>
                                 </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wc-GL-juW">
+                                    <rect key="frame" x="18" y="17" width="119" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -148,6 +155,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
                     <connections>
+                        <outlet property="dateLabel" destination="7wc-GL-juW" id="YVr-tk-5D8"/>
                         <outlet property="headerImageView" destination="sgx-Dc-dZf" id="J12-4S-Kl1"/>
                         <outlet property="headerView" destination="SL3-gq-9Lw" id="cL2-CL-OLI"/>
                         <outlet property="tableView" destination="r7i-6Z-zg0" id="s7V-yl-5ni"/>
